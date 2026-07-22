@@ -1,0 +1,17 @@
+#include<stdio.h>
+
+int main() {
+    // Write C code here
+    int a[100],n;
+    printf("Enter no of elements in array\n");
+    scanf("%d",&n);
+    printf("enter elements in array\n");
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+        }
+    printf("Enter of array are\n");
+    for(int i=0;i<n;i++){
+        printf(" %d",a[i]);
+    }
+
+    return 0;

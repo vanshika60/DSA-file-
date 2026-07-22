@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    // 1. Initialize a fixed-size array with some sample elements
+    int arr[100] = {10, 20, 30, 40, 50}; 
+    int size = 5; // Current number of elements inside the array
+    
+    int element = 25;  // The value we want to insert
+    int index = 2;     // The position (0-indexed) where we want to insert it
+    
+    printf("Original array:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    // 2. Shift elements to the right to make room for the new element
+    // We start from the end of the array and move backward down to the target index
+    for (int i = size - 1; i >= index; i--) {
+        arr[i + 1] = arr[i];
+    }
+
+    // 3. Insert the new element at the target index
+    arr[index] = element;
+
+    // 4. Increment the actual size of the array
+    size++;
+
+    printf("Array after inserting %d at index %d:\n", element, index);
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}

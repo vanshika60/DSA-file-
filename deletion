@@ -1,0 +1,32 @@
+#include<stdio.h>
+
+int main() {
+    int array = {10, 20, 30, 40, 50}; 
+    int size = 5; 
+    int pos = 3;
+
+    printf("array before deletion: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    if (pos < 0 || pos >= size) {
+        printf("Deletion is not possible. Index out of bounds.\n");
+    } else {
+        
+        for (int i = pos; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+
+        size--; 
+
+        printf("Array after deleting index 1: ");
+        for (int i = 0; i < size; i++) {
+            printf("%d ", array[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}

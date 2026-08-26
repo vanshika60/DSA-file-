@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+int data;
+struct node *next;
+}
+int main(){
+struct node *head = Null;
+struct node *temp = Null;
+struct node *new_node = Null;
+int choice;
+do{
+new_node = (struct *)malloc(sizeof(struct node));
+if (new_node == Null){
+return 1;}
+printf("Enter data: ");
+scanf("%d", & new_node->data);
+new_node->next =  Null;
+if(head == null){
+head = nem_node;
+temp = new_node;
+} else{
+temp->next = new_node;
+temp = new_node;}
+printf("Do you want to add another node?( 1 for yes , 0 for no): ");
+scanf("%d", &choice);
+}
+while (choice == 1);
+temp = head ;
+while(temp!= Null){
+printf(%d -> " , temp ->data);
+temp = temp->next;
+}
+printf("NULL\n");
+temp = head;
+while(temp!=Null){
+struct node *next = temp-> next;
+free(temp);
+temp = next;
+} 
+return 0;
+}

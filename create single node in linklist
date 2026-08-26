@@ -1,0 +1,12 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+int data;
+struct node*new node = (struct node*);
+if(new node == null)malloc(size of (struct node){
+printf("Memory allocation failed\n);
+return 1;}
+new node -> data;
+new node -> next = null;
+printf("Node created with data = %d\n",new node -> data);
+return 0;

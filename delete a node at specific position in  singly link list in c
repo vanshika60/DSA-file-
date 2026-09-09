@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+  int data;
+  struct Node *next;
+};
+
+int size = 0;
+
+void insert (struct Node **head, int data)
+{
+  struct Node *new_node = (struct Node *) malloc (sizeof (struct Node));
+
+  new_node->data = data;
+  new_node->next = *head;
+  *head = new_node;
+  size++;
+}
+
+void deletePosition (int pos, struct Node **head)
+{
+  struct Node *temp = *head;
+  struct Node *prevNode;
+
+  if (pos < 1 || pos > size)
+    {
+      printf ("Invalid\n");
+      return;
+    }
+
+  
+  if (pos == 1)
+    {
+      *head = (*head)->next;
+      printf ("%d deleted\n", temp->data);
+      free (temp);
+      size--;
+      return;
+    }
+
+ 
+  while (--pos)
+    {
+      prevNode = temp;
+      temp = temp->next;
+    }
+
+  prevNode->next = temp->next;
+  
+  printf ("%d deleted\n", temp->data);
+  free (temp);
+  size--;
+}
+
+void display (struct Node *node)
+{
+
+  printf ("Linked List : ");
+
+  
+  while (node != NULL)
+    {
+      printf ("%d ", node->data);
+      node = node->next;
+    }
+  printf ("\n");
+}
+
+int main ()
+{
+  struct Node *head = NULL;
+
+  insert (&head, 50);
+  insert (&head, 40);
+  insert (&head, 30);
+  insert (&head, 20);
+  insert (&head, 10);
+
+  display (head);
+
+  
+  deletePosition (2, &head);
+
+ 
+  deletePosition (4, &head);
+
+  display (head);
+
+  return 0;
+}

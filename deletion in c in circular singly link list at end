@@ -1,0 +1,21 @@
+void deleteLast(struct Node** head_ref) {
+    if (*head_ref == NULL) return;
+
+    struct Node* curr = *head_ref;
+
+   
+    if (curr->next == *head_ref) {
+        free(curr);
+        *head_ref = NULL;
+        return;
+    }
+
+    
+    struct Node* prev = NULL;
+    while (curr->next != *head_ref) {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    prev->next = *head_ref;    
+    free(curr);               

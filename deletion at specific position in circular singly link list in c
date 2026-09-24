@@ -1,0 +1,56 @@
+void deleteAtPosition(struct Node** head_ref, int position) {
+   
+    if (*head_ref == NULL) {
+        printf("List is empty. Deletion not possible.\n");
+        return;
+    }
+
+    
+    if (position < 1) {
+        printf("Position must be 1 or greater.\n");
+        return;
+    }
+
+    struct Node* curr = *head_ref;
+    struct Node* prev = NULL;
+
+   
+    if (position == 1) {
+       
+        if (curr->next == *head_ref) {
+            free(curr);
+            *head_ref = NULL;
+            return;
+        }
+
+        
+        struct Node* last = *head_ref;
+        while (last->next != *head_ref) {
+            last = last->next;
+        }
+
+        last->next = curr->next;   
+        *head_ref = curr->next;    
+        free(curr);               
+        return;
+    }
+
+   
+    int count = 1;
+   
+    while (count < position && curr->next != *head_ref) {
+        prev = curr;
+        curr = curr->next;
+        count++;
+    }
+
+  
+    if (count < position) {
+        printf("Position %d is out of bounds. List has only %d nodes.\n", position, count);
+        return;
+    }
+
+   
+    prev->next = curr->next;
+    free(curr);
+}

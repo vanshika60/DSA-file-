@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* insertAtBeginning(struct Node* last, int data) {
+  
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        return last;
+    }
+    
+
+    newNode->data = data;
+
+
+    if (last == NULL) {
+        newNode->next = newNode;
+        last = newNode; 
+    } 
+    
+    else {
+        newNode->next = last->next;
+        last->next = newNode;       
+    }
+
+    return last;
+  }

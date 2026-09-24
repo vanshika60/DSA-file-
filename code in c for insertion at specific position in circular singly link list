@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+
+struct Node* insertAtPosition(struct Node* last, int data, int position) {
+   
+    if (position < 1) {
+        printf("Invalid position!\n");
+        return last;
+    }
+
+   
+    if (position == 1) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        if (newNode == NULL) return last;
+        newNode->data = data;
+
+        if (last == NULL) {
+            newNode->next = newNode;
+            last = newNode;
+        } else {
+            newNode->next = last->next;
+            last->next = newNode;
+        }
+        return last;
+    }
+
+  
+    if (last == NULL) {
+        printf("List is empty, cannot insert at position %d!\n", position);
+        return last;
+    }
+
+    struct Node* curr = last->next; // Start at the head node
+    
+   
+    for (int i = 1; i < position - 1; i++) {
+        curr = curr->next;
+        
+     
+        if (curr == last->next) {
+            printf("Position out of bounds!\n");
+            return last;
+        }
+    }
+
+    
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) return last;
+    newNode->data = data;
+
+   
+    newNode->next = curr->next;
+    curr->next = newNode;
+
+    
+    if (curr == last) {
+        last = newNode;
+    }
+
+    return last;
+}

@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+
+struct Node* createCircularList(int n) {
+    if (n <= 0) return NULL;
+
+    struct Node* tail = NULL;
+    struct Node* newNode;
+
+    for (int i = 1; i <= n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        if (newNode == NULL) {
+            printf("Memory allocation failed!\n");
+            return tail;
+        }
+        
+        printf("Enter data for node %d: ", i);
+        scanf("%d", &newNode->data);
+
+        if (tail == NULL) {
+            tail = newNode;
+            tail->next = tail; 
+        } else {
+            newNode->next = tail->next;
+            tail->next = newNode;       
+            tail = newNode;            
+        }
+    }
+    return tail; 
+}
+
+
+int main() {
+    int n;
+    struct Node* tail = NULL;
+
+    printf("Enter the number of nodes to create: ");
+    scanf("%d", &n);
+
+    
+    tail = createCircularList(n);
+
+    if (tail != NULL) {
+        printf("\nCircular Singly Linked List successfully created!\n");
+        printf("The tail node contains data: %d\n", tail->data);
+        printf("The head node (tail->next) contains data: %d\n", tail->next->data);
+        
+
+        struct Node* current = tail->next;
+        struct Node* nextNode;
+        do {
+            nextNode = current->next;
+            free(current);
+            current = nextNode;
+        } while (current != tail->next);
+    }
+
+    return 0;
+}

@@ -1,0 +1,172 @@
+#include <stdio.h>
+
+#define MAX 100
+
+
+struct Stack {
+    int top;
+    char arr[MAX];
+};
+
+
+void push(struct Stack* stack, char item) {
+    if (stack->top >= MAX - 1) return;
+    stack->arr[++stack->top] = item;
+}
+
+char pop(struct Stack* stack) {
+    if (stack->top == -1) return '\0';
+    return stack->arr[stack->top--];
+}
+
+char peek(struct Stack* stack) {
+    if (stack->top == -1) return '\0';
+    return stack->arr[stack->top];
+}
+
+int isEmpty(struct Stack* stack) {
+    return stack->top == -1;
+}
+
+
+int getStringLength(char* str) {
+    int len = 0;
+    while (str[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+
+
+void copyString(char* dest, char* src) {
+    int i = 0;
+    while (src[i] != '\0') {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
+
+int isAlphaNumeric(char ch) {
+    if ((ch >= 'a' && ch <= 'z') || 
+        (ch >= 'A' && ch <= 'Z') || 
+        (ch >= '0' && ch <= '9')) {
+        return 1;
+    }
+    return 0;
+}
+
+
+int precedence(char ch) {
+    switch (ch) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        case '^':
+            return 3;
+    }
+    return -1;
+}
+
+int isOperator(char ch) {
+    return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^');
+}
+
+
+void reverseAndSwap(char* exp) {
+    int len = getStringLength(exp);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = exp[i];
+        exp[i] = exp[len - 1 - i];
+        exp[len - 1 - i] = temp;
+    }
+
+    for (int i = 0; i < len; i++) {
+        if (exp[i] == '(') {
+            exp[i] = ')';
+        } else if (exp[i] == ')') {
+            exp[i] = '(';
+        }
+    }
+}
+
+
+void reverse(char* exp) {
+    int len = getStringLength(exp);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = exp[i];
+        exp[i] = exp[len - 1 - i];
+        exp[len - 1 - i] = temp;
+    }
+}
+void infixToPostfix(char* infix, char* postfix) {
+    struct Stack stack;
+    stack.top = -1;
+    int k = 0;
+
+    for (int i = 0; infix[i] != '\0'; i++) {
+        char ch = infix[i];
+
+        
+        if (isAlphaNumeric(ch)) {
+            postfix[k++] = ch;
+        }
+       
+        else if (ch == '(') {
+            push(&stack, ch);
+        }
+        
+        else if (ch == ')') {
+            while (!isEmpty(&stack) && peek(&stack) != '(') {
+                postfix[k++] = pop(&stack);
+            }
+            pop(&stack); // Pop '('
+        }
+       
+        else if (isOperator(ch)) {
+            
+            while (!isEmpty(&stack) && precedence(ch) < precedence(peek(&stack))) {
+                postfix[k++] = pop(&stack);
+            }
+            push(&stack, ch);
+        }
+    }
+
+   
+    while (!isEmpty(&stack)) {
+        postfix[k++] = pop(&stack);
+    }
+    postfix[k] = '\0';
+}
+
+
+void infixToPrefix(char* infix, char* prefix) {
+    char modifiedInfix[MAX];
+    copyString(modifiedInfix, infix);
+
+   
+    reverseAndSwap(modifiedInfix);
+
+  
+    char postfix[MAX];
+    infixToPostfix(modifiedInfix, postfix);
+
+   
+    copyString(prefix, postfix);
+    reverse(prefix);
+}
+
+int main() {
+    char infix[MAX] = "((A/B)+C)-(D+(E*F))";
+    char prefix[MAX];
+
+    printf("Infix Expression:  %s\n", infix);
+    infixToPrefix(infix, prefix);
+    printf("Prefix Expression: %s\n", prefix);
+
+    return 0;
+}
